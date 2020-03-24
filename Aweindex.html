@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+       <title>Trick Cubes</title>
+</head>
+<body>
+    <div id="container"></div>
+    <script src="js/awe-loader.js"></script>
+    <script>
+        window.addEventListener('load',function(){
+            window.awe.init({
+                device_type: awe.AUTO_DETECT_DEVICE_TYPE,
+                setings: {
+                    container_id: 'container',
+                    default_camera_position: {x:0, y:0, z:0},
+                    default_lights: [{
+                        id: 'point_Light',
+                        type: 'point',
+                        color: 0xFFFFFF
+
+                    }]
+                },
+
+                ready: function(){
+                    awe.until.require([
+                        {
+                        capabilities: ['gum' 'webgl'],
+                        files: [['js/awe-standard-dependencies.js', 'js/awe-standard.js'], 
+                        'js/awe-standard-object_clicked.js', 
+                        'js/awe-jsartoolkit-dependencies.js',
+                        'js/awe.marker_ar.js'
+
+                    ],
+                    success: function(){
+                        window.awe.setup_scene();
+
+                        //POIS
+                        awe.pois.add({id: 'marker',position: {x:0, y:0, z: 10000}, visibility:false});
+
+                        awe.projections.add({
+                            id: 'largeBox',
+                            geometry: {shape: 'cube', x: 180, y: 150, z: 180},
+                            position: {x:0, y:0, z:0},
+                            rotation: {x:90, z:45},
+                            material: {color: 0xFFFFFF, opacity: 1.0, transparent: false,
+                                        wireframe: false, fog: true} 
+                            },{poi_id: 'marker'});
+
+                            awe.projections.add({
+                            id: 'mediumBox',
+                            geometry: {shape: 'cube', x: 90, y: 90, z: 90},
+                            position: {x:-5, y:-31, z: -5},
+                            rotation: {y:45},
+                            material: {
+                                        type: 'phong',
+                                        color: 0xFF0000} 
+                            },{poi_id: 'marker'});
+
+                        awe.events.add([{
+                            id: 'ar_tracking_marker',
+                            device_types: {
+                                pc: 1,
+                                android: 1
+                            },
+                            register: function(handler){
+                                window.addEventListener('ar_tracking_marker', handler, false);
+                            },
+                            unregister: function(handler){
+                                window.removeEventListener('ar_tracking_marker', handler, false);
+                            },
+                            handler: function(event){
+                                if 
+                            }
+
+                        }]);//awe.events.add
+                        
+
+                    }//success
+
+                   
+                    },
+                   ]);//awe.until.require
+                }//ready
+            });//window.awe.init
+        })//load
+    </script>
+    
+</body>
+</html>
